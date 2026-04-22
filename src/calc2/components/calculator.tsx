@@ -17,6 +17,7 @@ import { Group } from 'calc2/store/groups';
 import { translateHeader } from 'calc2/utils/misc';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter, ModalHeader, Nav, NavItem, NavLink, TabContent, TabPane, UncontrolledDropdown } from 'reactstrap';
@@ -161,8 +162,8 @@ example,  42
 									<FontAwesomeIcon icon={faBars as IconProp} />
 								</DropdownToggle>
 								<DropdownMenu>
-									<DropdownItem href="/relax/calc"><FontAwesomeIcon icon={faCalculator as IconProp} /> <T id="calc.navigation.calc" /></DropdownItem>
-									<DropdownItem href="/relax/help"><FontAwesomeIcon icon={faComment as IconProp } /> <T id="calc.navigation.help" /></DropdownItem>
+									<DropdownItem tag={Link} to="/relax/calc"><FontAwesomeIcon icon={faCalculator as IconProp} /> <T id="calc.navigation.calc" /></DropdownItem>
+									<DropdownItem tag={Link} to="/relax/help"><FontAwesomeIcon icon={faComment as IconProp } /> <T id="calc.navigation.help" /></DropdownItem>
 									<DropdownItem href="https://github.com/dbis-uibk/relax/issues"><FontAwesomeIcon icon={faQuestionCircle as IconProp} /> <T id="calc.navigation.feedback" /></DropdownItem>
 									<DropdownItem onClick={this.toggleDatasetModal}><FontAwesomeIcon icon={faDatabase as IconProp} /> <T id="calc.menu.datasets" /></DropdownItem>
 									<DropdownItem divider />

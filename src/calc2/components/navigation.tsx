@@ -7,6 +7,7 @@
 import * as React from 'react';
 import { Navbar, NavbarBrand, Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import NavLink from 'reactstrap/lib/NavLink';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faCalculator,
@@ -97,9 +98,9 @@ export class Navigation extends React.Component<Props, State> {
 	render() {
         return (
             <Navbar color="light" light expand="md" className="desktopNavbar">
-                <NavbarBrand href="/relax/">RelaX</NavbarBrand>
+                <NavbarBrand tag={Link} to="/relax/">RelaX</NavbarBrand>
                 <Nav className="ml-auto" navbar>
-                    <NavItem className="navItemSpace"><NavLink href="/relax/calc"><FontAwesomeIcon icon={faCalculator  as IconProp} /> Calculator</NavLink></NavItem>
+                    <NavItem className="navItemSpace"><NavLink tag={Link} to="/relax/calc"><FontAwesomeIcon icon={faCalculator  as IconProp} /> Calculator</NavLink></NavItem>
                     <UncontrolledDropdown nav inNavbar className="navItemSpace">
                         <DropdownToggle nav caret><FontAwesomeIcon icon={faGlobeEurope as IconProp} /> <T id="calc.navigation.language" /></DropdownToggle>
                         <DropdownMenu right>
@@ -112,8 +113,8 @@ export class Navigation extends React.Component<Props, State> {
                         </DropdownMenu>
                     </UncontrolledDropdown>
                     <NavItem className="navItemSpace"><NavLink href="https://github.com/dbis-uibk/relax/issues"><FontAwesomeIcon icon={faComment as IconProp} /> <T id="calc.navigation.feedback" /></NavLink></NavItem>
-                    <NavItem className="navItemSpace"><NavLink href="/relax/help"><FontAwesomeIcon icon={faQuestionCircle as IconProp} /> <T id="calc.navigation.help" /></NavLink></NavItem>
-                    <NavItem className="navItemSpace"><NavLink href="/relax/imprint"><FontAwesomeIcon icon={faAddressCard as IconProp} /> <T id="calc.navigation.imprint" /></NavLink></NavItem>
+                    <NavItem className="navItemSpace"><NavLink tag={Link} to="/relax/help"><FontAwesomeIcon icon={faQuestionCircle as IconProp} /> <T id="calc.navigation.help" /></NavLink></NavItem>
+                    <NavItem className="navItemSpace"><NavLink tag={Link} to="/relax/imprint"><FontAwesomeIcon icon={faAddressCard as IconProp} /> <T id="calc.navigation.imprint" /></NavLink></NavItem>
 									<NavItem className="navItemSpace">
 										<div className="theme-mode-wrapper">
 											{this.state.currentTheme === 'dark' ?
