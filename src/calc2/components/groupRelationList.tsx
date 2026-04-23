@@ -7,7 +7,7 @@
 import { GroupTable } from 'calc2/store/groups';
 import * as React from 'react';
 
-require('./groupRelationList.scss');
+import './groupRelationList.scss';
 
 interface Props {
 	tables: GroupTable[],

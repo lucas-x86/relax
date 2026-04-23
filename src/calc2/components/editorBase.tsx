@@ -38,15 +38,15 @@ import {
 	faFileCsv  
 } from '@fortawesome/free-solid-svg-icons';
 
-require('codemirror/lib/codemirror.css');
-require('codemirror/theme/eclipse.css');
-require('codemirror/addon/hint/show-hint.css');
-require('codemirror/addon/lint/lint.js');
-require('codemirror/addon/lint/lint.css');
-require('codemirror/addon/display/placeholder.js');
-require('codemirror/addon/display/autorefresh.js');
-require('codemirror/mode/sql/sql.js');
-require('handsontable/dist/handsontable.full.css');
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/eclipse.css';
+import 'codemirror/addon/hint/show-hint.css';
+import 'codemirror/addon/lint/lint.js';
+import 'codemirror/addon/lint/lint.css';
+import 'codemirror/addon/display/placeholder.js';
+import 'codemirror/addon/display/autorefresh.js';
+import 'codemirror/mode/sql/sql.js';
+import 'handsontable/dist/handsontable.full.css';
 
 CodeMirror.defineMode('trc', function () {
 	const keywords = ['in', 'and', 'or', 'xor', 'not', 'implies', 'iff', 'exists', 'for all', 'not between', 'between'];

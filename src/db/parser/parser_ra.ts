@@ -1,7 +1,7 @@
 import { i18n } from 'calc2/i18n';
 
-const pegParserRelalg = require('./grammar_ra.pegjs') as any;
-const pegParserBagalg = require('./grammar_bags.pegjs') as any;
+import pegParserRelalg from './grammar_ra.pegjs';
+import pegParserBagalg from './grammar_bags.pegjs';
 
 export function parseRelalg(text: string, 	relationNames: string[] = [], strictRA: boolean = true): relalgAst.rootRelalg {
 	const ast = (strictRA ? pegParserRelalg : pegParserBagalg)

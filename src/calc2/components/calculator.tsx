@@ -25,7 +25,7 @@ import { GroupRelationList } from '../components/groupRelationList';
 import { MenuConnected } from '../components/menu';
 import { Navigation } from '../components/navigation';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-require('./calculator.scss');
+import './calculator.scss';
 
 
 type Props = {

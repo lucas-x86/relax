@@ -230,7 +230,7 @@ export function queryWithReplacedTRCOperatorsFromAst(
 	};
 }
 
-const pegParserTrc = require('./parser/grammar_trc.pegjs') as any;
+import pegParserTrc from './parser/grammar_trc.pegjs';
 
 export function parseTRCSelect(text: string): trcAst.TRC_Expr {
 
@@ -254,7 +254,7 @@ export function parseTRCDump(text: string): relalgAst.GroupRoot {
 	);
 }
 
-const pegParserSql = require('./parser/grammar_sql.pegjs') as any;
+import pegParserSql from './parser/grammar_sql.pegjs';
 
 export function parseSQLSelect(text: string): sqlAst.rootSql {
 

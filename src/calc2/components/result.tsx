@@ -14,7 +14,7 @@ import {t} from "calc2/i18n";
 import { EditorBase } from './editorBase';
 import { ExecutionError } from 'db/exec/ExecutionError';
 
-require('./result.scss');
+import './result.scss';
 
 const maxLinesPerPage = 10;
 

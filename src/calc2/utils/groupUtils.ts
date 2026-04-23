@@ -9,15 +9,15 @@ import { parseRelalgGroup, relalgFromRelalgAstNode, replaceVariables } from 'db/
 import * as jQuery from 'jquery';
 import {string} from "prop-types";
 
-const ld_sb: any = require('../data/sb.txt');
-const ld_ufes: any = require('../data/ufes.txt');
-const ld: any = require('../data/misc.txt');
-const ld_uibk: any = require('../data/uibk.txt');
+import ld_sb from '../data/sb.txt?raw';
+import ld_ufes from '../data/ufes.txt?raw';
+import ld from '../data/misc.txt?raw';
+import ld_uibk from '../data/uibk.txt?raw';
 const LOCAL_DATA: { [id: string]: string } = {
-	'sb': ld_sb.default ? ld_sb.default : '',
-  'ufes': ld_ufes.default ? ld_ufes.default : '',
-  'misc': ld.default ? ld.default : '',
-  'uibk': ld_uibk.default ? ld_uibk.default : '',
+	'sb': ld_sb.default ? ld_sb.default : ld_sb,
+  'ufes': ld_ufes.default ? ld_ufes.default : ld_ufes,
+  'misc': ld.default ? ld.default : ld,
+  'uibk': ld_uibk.default ? ld_uibk.default : ld_uibk,
 };
 
 export function parseGroupsFromDefinition(text: string, groupInfo: GroupInfo, sourceInfo: SourceInfo) {

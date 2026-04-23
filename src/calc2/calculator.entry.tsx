@@ -9,32 +9,29 @@ import { SET_LOCALE } from 'calc2/store/session';
 import 'custom-event-polyfill';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import './404.html';
 import { i18n } from './i18n';
-import Main from './main.hot';
+import { Main } from './main';
 import { store } from './store';
 
 
 
 ReactDOM.render(
 	(
-		<AppContainer>
-			<Main store={store} />
-		</AppContainer>
+		<Main store={store} />
 	),
 	document.getElementById('root'),
 );
 
 // init
-{
+setTimeout(() => {
 	const action: SET_LOCALE = {
 		type: 'SET_LOCALE',
 		locale: i18n.language,
 	};
+	store.dispatch(action);
 
 	// load all predefined groups
 	for (const action of loadStaticGroups()) {
 		store.dispatch(action);
 	}
-}
+}, 0);

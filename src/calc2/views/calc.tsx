@@ -47,16 +47,11 @@ export class Calc extends React.Component<Props> {
 	}
 
 	componentDidMount() {
-		/*this.setState({
-			params: queryString.parse(this.props.location.search)
-		})*/
 		this.apiView = this.props.location.pathname.split("/")[2] == "api"
 		this.params = queryString.parse(this.props.location.search)
 
-		// It's necessary to load remote group synchronouly
-		if (this.apiView) {
-			this.loadGroup(this.props);
-		}
+		this.init = true;
+		this.loadGroup(this.props);
 	}
 
 	componentDidUpdate(prevProps: Props): void {
@@ -73,14 +68,12 @@ export class Calc extends React.Component<Props> {
 		const { params } = this.props.match;
 		const { params: prevParams } = prevProps.match;
 		if (
-			this.init === false
-			|| params.source !== prevParams.source
+			params.source !== prevParams.source
 			|| params.id !== prevParams.id
 			|| params.filename !== prevParams.filename
 			|| params.index !== prevParams.index
 		) {
 			// change/load
-			this.init = true;
 			this.loadGroup(this.props);
 		}
 	}

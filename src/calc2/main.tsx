@@ -16,12 +16,13 @@ import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from 're
 import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, UncontrolledDropdown } from 'reactstrap';
 import NavLink from 'reactstrap/lib/NavLink';
 import { i18n } from './i18n';
-import { ConnectedCalc } from './views/calc';
-import { Help } from './views/help';
-import { Landing } from './views/landing';
-import { Imprint } from './views/imprint';
 
-require('calc2/style/index.scss');
+const ConnectedCalc = React.lazy(() => import('./views/calc').then(m => ({ default: m.ConnectedCalc })));
+const Help = React.lazy(() => import('./views/help').then(m => ({ default: m.Help })));
+const Landing = React.lazy(() => import('./views/landing').then(m => ({ default: m.Landing })));
+const Imprint = React.lazy(() => import('./views/imprint').then(m => ({ default: m.Imprint })));
+
+import 'calc2/style/index.scss';
 
 
 type Props = {
@@ -58,6 +59,7 @@ export class Main extends React.Component<Props, State> {
 			<Router>
 				<Provider store={store}>
 					<I18NProvider>
+						<React.Suspense fallback={<div className="center"><div className="spinnerInit"></div></div>}>
 							<Switch>
 								<Redirect exact from="/" to={`/relax/landing`} />
 								<Redirect exact from="/relax" to={`/relax/landing`} />
@@ -76,6 +78,7 @@ export class Main extends React.Component<Props, State> {
 									</div>
 								)} />
 							</Switch>
+						</React.Suspense>
 					</I18NProvider>
 				</Provider>
 			</Router>

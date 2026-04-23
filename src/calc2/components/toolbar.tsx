@@ -9,7 +9,7 @@ import { Popover } from 'calc2/components/popover';
 import { LanguageKeys, T, t } from 'calc2/i18n';
 import * as React from 'react';
 
-require('./toolbar.scss');
+import './toolbar.scss';
 
 export type Item<V = string> = {
 	type?: 'item',

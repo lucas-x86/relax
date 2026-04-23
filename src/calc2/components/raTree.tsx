@@ -15,8 +15,8 @@ import { faSearchMinus, faSearchPlus, faRefresh, faDownLeftAndUpRightToCenter } 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TransformWrapper, TransformComponent, useControls, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 
-require('./raTree.scss');
-// require('./raTreeFamilyTree.scss');
+import './raTree.scss';
+// import './raTreeFamilyTree.scss';
 
 interface Props {
 	root: RANode,
