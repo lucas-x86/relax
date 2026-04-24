@@ -616,103 +616,100 @@ h4 {
 
 /** transition styles when switching to light mode **/
 body {
-	transition: all .2s linear;
+	transition: background-color .16s linear, color .16s linear;
 }
 .CodeMirror.readonly .CodeMirror-scroll {
-	transition: all .2s linear;
+	transition: none;
 }
 .navbar, .jumbotron, .example,.modal-content {
-	transition: all .2s linear;
+	transition: background-color .16s linear, border-color .16s linear, color .16s linear;
 }
 .table {
-	transition: all .2s linear;
+	transition: none;
 }
 .view-content, .calculator, .view-max {
-	transition: all .2s linear;
+	transition: none;
 }
 .nav-link, .navbar-brand, .theme-mode-toggle {
-	transition: all .2s linear;
-}
-.nav-link:hover, .theme-mode-toggle:hover {
-	transition: all .2s linear;
+	transition: background-color .12s linear, border-color .12s linear, color .12s linear, opacity .12s linear;
 }
 .theme-mode-toggle {
-	transition: all .2s linear;
+	transition: background-color .12s linear, border-color .12s linear, color .12s linear, opacity .12s linear;
 	svg {
-		transition: all .2s linear;
+		transition: color .12s linear, opacity .12s linear;
 	}
 }
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-	transition: all .2s linear;
+	transition: background-color .16s linear, border-color .16s linear, color .16s linear;
 }
 .toolbar {
-	transition: all .2s linear;
+	transition: background-color .16s linear, border-color .16s linear, color .16s linear;
 }
 .calculator .tab-content-border {
-	transition: all .2s linear;
+	transition: background-color .16s linear, border-color .16s linear, color .16s linear;
 }
 .nav-tabs, .nav-tabs .nav-link {
-	transition: all .2s linear;
+	transition: background-color .12s linear, border-color .12s linear, color .12s linear;
 }
 
 .toolbar > div > *:hover {
-	transition: all .2s linear;
+	transition: background-color .12s linear, border-color .12s linear, color .12s linear;
 }
 .toolbar {
-	transition: all .2s linear;
+	transition: background-color .16s linear, border-color .16s linear, color .16s linear;
 }
 .CodeMirror-gutter, .CodeMirror-scroll, .CodeMirror-gutters {
-	transition: all .2s linear;
+	transition: none;
 }
 
 .CodeMirror-cursor,
 .CodeMirror div.CodeMirror-secondarycursor {
-	transition: all .2s linear;
+	transition: none;
 }
 
 .calculator .CodeMirror {
-	transition: all .2s linear;
+	transition: none;
 }
 .CodeMirror {
-	transition: all .2s linear;
+	transition: none;
 }
 .CodeMirror-gutters {
-	transition: all .2s linear;
+	transition: none;
 }
 
 .cm-s-eclipse span.cm-keyword {
-	transition: all .2s linear;
+	transition: none;
 }
 .cm-s-eclipse span.cm-operator {
-	transition: all .2s linear;
+	transition: none;
 }
 .cm-s-eclipse span.cm-variable-2 {
-	transition: all .2s linear;
+	transition: none;
 }
 .dropdown button {
-	transition: all .2s linear;
+	transition: background-color .12s linear, border-color .12s linear, color .12s linear;
 }
 
 .dropdown-menu {
-	transition: all .2s linear;
+	transition: background-color .12s linear, border-color .12s linear, color .12s linear;
 }
 
 .dropdown-item:hover {
-	transition: all .2s linear;
+	transition: background-color .12s linear, border-color .12s linear, color .12s linear;
 }
 /** DARK MODE **/
 body.dark-theme {
 	background-color: black;
-	transition: all .2s linear;
+	transition: background-color .16s linear, color .16s linear;
 }
 
 
 .dark-theme {
 
-	transition: all .2s linear;
+	transition: none;
 	
 	.CodeMirror.readonly .CodeMirror-scroll {
-		transition: all .2s linear;
+		transition: none;
 		background-color: rgba(31, 31, 31);
 	}
 
@@ -745,16 +742,16 @@ body.dark-theme {
 	.navbar, .jumbotron, .example,.modal-content {
 	
 		background-color: rgba(31, 31, 31) !important;
-		transition: all .2s linear;
+		transition: background-color .16s linear, border-color .16s linear, color .16s linear;
 		color: #656161;
 	}
 	.table {
-		transition: all .2s linear;
+		transition: none;
 		color: #656161;
 	}
 
 	.view-content, .calculator, .view-max {
-		transition: all .2s linear;
+		transition: none;
 		background: #000;
 		color: #656161;
 	}
@@ -762,7 +759,7 @@ body.dark-theme {
 	
 	
 	.sk-fading-circle .sk-circle:before {
-		transition: all .2s linear;
+		transition: background-color .16s linear, color .16s linear;
 		content: '';
 		display: block;
 		margin: 0 auto;
@@ -776,11 +773,10 @@ body.dark-theme {
 
 	.nav-link, .navbar-brand, .theme-mode-toggle {
 		color: #656161 !important;
-		transition: all .2s linear;
 	}
 	.nav-link:hover, .theme-mode-toggle:hover {
-		filter: brightness(1.2);
-		transition: all .2s linear;
+		color: #8a8484 !important;
+		background-color: rgba(255, 255, 255, 0.04);
 	}
 
 
@@ -789,9 +785,7 @@ body.dark-theme {
 		background: transparent;
 		border: none;
 		margin: auto;
-		transition: all .2s linear;
 		svg {
-			transition: all .2s linear;
 			color: #656161 !important;
 		}
 	}
@@ -807,21 +801,17 @@ body.dark-theme {
 	}
 	
 	.dropdown-toggle {
-		transition: all .2s linear;
 		color: #656161 !important;
 	}
 
 	.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-		transition: all .2s linear;
 		background-color: rgb(31, 31, 31);
 		border-color: rgb(31, 31, 31) rgb(31, 31, 31) #fff;
 	}
 	.toolbar {
-		transition: all .2s linear;
 		background-color: rgb(31, 31, 31);
 	}
 	.calculator .tab-content-border {
-		transition: all .2s linear;
 		border: 1px solid rgb(31, 31, 31);
 		//border-top-style: none;
 		margin-bottom: 16px;
@@ -829,46 +819,43 @@ body.dark-theme {
 	}
 	
 	.nav-tabs, .nav-tabs .nav-link {
-		transition: all .2s linear;
 		border-bottom: none;
 	}
 
 	.toolbar > div > *:hover {
-		transition: all .2s linear;
 		background-color: rgb(61, 61, 61);
 		border-style: none !important;
 	}
 	.toolbar {
-		transition: all .2s linear;
 		border-color: rgb(31, 31, 31);
 	}
 	
 	.CodeMirror-gutter, .CodeMirror-scroll, .CodeMirror-gutters {
-		transition: all .2s linear;
+		transition: none;
 		background-color: black;
 	}
 
 	.CodeMirror-cursor,
 	.CodeMirror div.CodeMirror-secondarycursor {
-		transition: all .2s linear;
+		transition: none;
 		border-color: #9b9494;
 	}
 	
 	.calculator .CodeMirror {
-		transition: all .2s linear;
+		transition: none;
 		border: 1px solid rgb(61, 61, 61);
 	}
 	.CodeMirror {
-		transition: all .2s linear;
+		transition: none;
 		background: rgb(61, 61, 61);
 		color: #9b9494;
 	}
 	.CodeMirror-gutters {
-		transition: all .2s linear;
+		transition: none;
 		border-right: 1px solid rgb(31, 31, 31);
 	}
 	.alert {
-		transition: all .2s linear;
+		transition: background-color .16s linear, border-color .16s linear, color .16s linear;
 		background-color: rgb(31, 31, 31);
 		border: 1px solid rgb(31, 31, 31);
 	}
@@ -877,24 +864,22 @@ body.dark-theme {
 	}
 
 	.cm-s-eclipse span.cm-keyword {
-		transition: all .2s linear;
+		transition: none;
 		color: #b6629a;
 	}
 	.cm-s-eclipse span.cm-operator {
-		transition: all .2s linear;
+		transition: none;
 		color: #9b9494;
 	}
 	.cm-s-eclipse span.cm-variable-2 {
-		transition: all .2s linear;
+		transition: none;
 		color: #7272f4;
 	}
 	.dropdown button {
-		transition: all .2s linear;
 		color: #656161;
 	}
 	
 	.dropdown-menu {
-		transition: all .2s linear;
 		color: #656161;
 		background-color: rgb(31, 31, 31);
 		
@@ -905,7 +890,6 @@ body.dark-theme {
 	}
 	
 	.dropdown-item:hover {
-		transition: all .2s linear;
 		background-color: rgb(61, 61, 61);
 		//color: rgb(31, 31, 31);
 	}

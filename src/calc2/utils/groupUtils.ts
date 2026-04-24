@@ -13,11 +13,13 @@ import ld_sb from '../data/sb.txt?raw';
 import ld_ufes from '../data/ufes.txt?raw';
 import ld from '../data/misc.txt?raw';
 import ld_uibk from '../data/uibk.txt?raw';
+import ld_starter from '../data/starter.txt?raw';
 const LOCAL_DATA: { [id: string]: string } = {
 	'sb': ld_sb.default ? ld_sb.default : ld_sb,
   'ufes': ld_ufes.default ? ld_ufes.default : ld_ufes,
   'misc': ld.default ? ld.default : ld,
   'uibk': ld_uibk.default ? ld_uibk.default : ld_uibk,
+  'starter': ld_starter.default ? ld_starter.default : ld_starter,
 };
 
 export function parseGroupsFromDefinition(text: string, groupInfo: GroupInfo, sourceInfo: SourceInfo) {

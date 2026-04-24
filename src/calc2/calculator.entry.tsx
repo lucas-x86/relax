@@ -4,7 +4,6 @@
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-import { loadStaticGroups } from 'calc2/store/groups';
 import { SET_LOCALE } from 'calc2/store/session';
 import 'custom-event-polyfill';
 import * as React from 'react';
@@ -30,8 +29,4 @@ setTimeout(() => {
 	};
 	store.dispatch(action);
 
-	// load all predefined groups
-	for (const action of loadStaticGroups()) {
-		store.dispatch(action);
-	}
 }, 0);

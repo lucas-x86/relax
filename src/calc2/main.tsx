@@ -66,7 +66,7 @@ export class Main extends React.Component<Props, State> {
 								<Route path="/relax/landing" component={Landing} />
 								<Route path="/relax/help" component={Help} />
 								<Route path="/relax/imprint" component={Imprint} />
-								<Redirect from="/relax/calc" to="/relax/calc/local/ufes/local/0" exact strict />
+								<Redirect from="/relax/calc" to="/relax/calc/local/starter/local/0" exact strict />
 								<Route path="/relax/calc/:source/:id/:filename/:index" component={ConnectedCalc} />
 								<Route path="/relax/calc/:source/:id" component={ConnectedCalc} />
 								<Route path="/relax/api/:source/:id/:filename/:index" component={ConnectedCalc} />

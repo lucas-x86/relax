@@ -1,0 +1,26 @@
+group: Starter
+description: small builtin example dataset for first use
+category@en:Starter
+
+Employees = {
+id:number, name:string, dept_id:number
+1, 'Ana', 10
+2, 'Bruno', 20
+3, 'Carla', 10
+4, 'Diego', 30
+}
+
+Departments = {
+id:number, name:string
+10, 'Sales'
+20, 'Engineering'
+30, 'Support'
+}
+
+Assignments = {
+employee_id:number, project:string
+1, 'Onboarding'
+2, 'Desktop App'
+3, 'Reporting'
+4, 'Support'
+}
