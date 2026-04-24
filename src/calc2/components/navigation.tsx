@@ -5,131 +5,27 @@
 * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import * as React from 'react';
-import { Navbar, NavbarBrand, Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import NavLink from 'reactstrap/lib/NavLink';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faCalculator,
-	faGlobeEurope,
-	faComment,
-	faQuestionCircle,
-	faAddressCard,
-	faSun,
-} from '@fortawesome/free-solid-svg-icons';
-import { T, i18n } from '../i18n';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
+import { Navbar, NavbarBrand } from 'reactstrap';
 
 type Props = {
 
 };
 
-type State = {
-	currentTheme: string;
-};
+type State = {};
 
 export class Navigation extends React.Component<Props, State> {
 	
     constructor(props: Props) {
         super(props);
-        this.state = {currentTheme: 'light'};
-        this.changeLocale = this.changeLocale.bind(this);
-				this.changeTheme = this.changeTheme.bind(this);
-    }
-
-	componentDidMount() {
-
-		let lightModeLS = localStorage.getItem('lightMode');	
-		// check if darkMode saved in localstorage	
-		let darkModeLS = localStorage.getItem('darkMode');
-		if(darkModeLS) {
-			darkModeLS = JSON.parse(darkModeLS);
-			if(darkModeLS) {
-				this.changeTheme('dark');
-			}
-		} 
-		else if(lightModeLS) {
-			lightModeLS = JSON.parse(lightModeLS);
-			if(lightModeLS) {
-				this.changeTheme('light');
-			}
-		}
-		else {
-			// automatically switch to dark mode if user device is configured to dark mode	
-			const matched = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			if(matched) {
-				this.changeTheme('dark');
-			}
-		}
-		
-
-	}
-		
-		
-    private changeLocale(lang: string) {
-        if (i18n.language === lang) {
-            return;
-        }
-        if (window.confirm(i18n.t('local.change'))) {
-            i18n.changeLanguage(lang);
-            window.location.reload();
-        }
-    }
-
-	private changeTheme(theme: string) {
-		switch (theme) {
-			case 'light':
-				document.body.classList.remove('dark-theme');
-				localStorage.removeItem('darkMode');
-				localStorage.setItem('lightMode', 'true');
-				this.setState({currentTheme: 'light'});
-				break;
-			case 'dark':
-				document.body.classList.add('dark-theme');
-				localStorage.removeItem('lightMode');
-				localStorage.setItem('darkMode', 'true');
-				this.setState({currentTheme: 'dark'});
-				break;
-		}
+        this.state = {};
 	}
 
 
 	render() {
         return (
             <Navbar color="light" light expand="md" className="desktopNavbar">
-                <NavbarBrand tag={Link} to="/relax/">RelaX</NavbarBrand>
-                <Nav className="ml-auto" navbar>
-                    <NavItem className="navItemSpace"><NavLink tag={Link} to="/relax/calc"><FontAwesomeIcon icon={faCalculator  as IconProp} /> Calculator</NavLink></NavItem>
-                    <UncontrolledDropdown nav inNavbar className="navItemSpace">
-                        <DropdownToggle nav caret><FontAwesomeIcon icon={faGlobeEurope as IconProp} /> <T id="calc.navigation.language" /></DropdownToggle>
-                        <DropdownMenu right>
-                            <DropdownItem onClick={() => this.changeLocale('en')}>en</DropdownItem>
-                            <DropdownItem onClick={() => this.changeLocale('de')}>de</DropdownItem>
-                            <DropdownItem onClick={() => this.changeLocale('es')}>es</DropdownItem>
-                            <DropdownItem onClick={() => this.changeLocale('kr')}>kr</DropdownItem>
-                            <DropdownItem onClick={() => this.changeLocale('pt')}>pt</DropdownItem>
-                            <DropdownItem onClick={() => this.changeLocale('it')}>it</DropdownItem>
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
-                    <NavItem className="navItemSpace"><NavLink href="https://github.com/dbis-uibk/relax/issues"><FontAwesomeIcon icon={faComment as IconProp} /> <T id="calc.navigation.feedback" /></NavLink></NavItem>
-                    <NavItem className="navItemSpace"><NavLink tag={Link} to="/relax/help"><FontAwesomeIcon icon={faQuestionCircle as IconProp} /> <T id="calc.navigation.help" /></NavLink></NavItem>
-                    <NavItem className="navItemSpace"><NavLink tag={Link} to="/relax/imprint"><FontAwesomeIcon icon={faAddressCard as IconProp} /> <T id="calc.navigation.imprint" /></NavLink></NavItem>
-									<NavItem className="navItemSpace">
-										<div className="theme-mode-wrapper">
-											{this.state.currentTheme === 'dark' ?
-												<button className="theme-mode-toggle" onClick={() => this.changeTheme('light')}><FontAwesomeIcon
-													icon={faSun as IconProp}/></button>
-												:
-												<button className="theme-mode-toggle" onClick={() => this.changeTheme('dark')}><FontAwesomeIcon
-													icon={faMoon as IconProp}/></button>
-											}
-												</div>
-									</NavItem>
-
-								</Nav>
+                <NavbarBrand>ReluX</NavbarBrand>
             </Navbar>
         );
     }
 }
-

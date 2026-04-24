@@ -121,7 +121,7 @@ export class Menu extends React.Component<Props> {
 						</ul>
 						<hr />
 						<h4><T id="calc.menu.create-own-dataset-headline" /></h4>
-						<p><T id="calc.menu.create-own-dataset-text" /> <Link to="/relax/help#tutorial-maintainer"><T id="calc.menu.create-own-dataset-text-link" /></Link></p>
+						<p><T id="calc.menu.create-own-dataset-text" /></p>
 						<button type="button" className="fullWidthBtn btn btn-secondary open-group-new-btn" onClick={() => { this.props.loadGroupTab(false); } } >
 							<i className="fa fa-plus-square-o fa-lg"></i> <span><T id="calc.menu.create-own-dataset-button-new" /></span>
 						</button>
@@ -142,4 +142,3 @@ export const MenuConnected = connect((state: store.State) => {
 		locale: state.session.locale,
 	};
 })(Menu);
-

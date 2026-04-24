@@ -4,14 +4,14 @@
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-import { faBars, faCalculator, faComment, faDatabase, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCalculator, faDatabase } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EditorGroup } from 'calc2/components/editorGroup';
 import { EditorRelalg } from 'calc2/components/editorRelalg';
 import { EditorBagalg } from 'calc2/components/editorBagalg';
 import { EditorTrc } from 'calc2/components/editorTrc';
 import { EditorSql } from 'calc2/components/editorSql';
-import { i18n, T, t } from 'calc2/i18n';
+import { T, t } from 'calc2/i18n';
 import * as store from 'calc2/store';
 import { Group } from 'calc2/store/groups';
 import { translateHeader } from 'calc2/utils/misc';
@@ -20,7 +20,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter, ModalHeader, Nav, NavItem, NavLink, TabContent, TabPane, UncontrolledDropdown } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import { GroupRelationList } from '../components/groupRelationList';
 import { MenuConnected } from '../components/menu';
 import { Navigation } from '../components/navigation';
@@ -75,16 +75,6 @@ export class Calculator extends React.Component<Props, State> {
 		this.setState({
 			relationModal: !this.state.relationModal,
 		});
-	}
-
-	private changeLocale(lang: string) {
-		if (i18n.language === lang) {
-			return;
-		}
-		if(window.confirm(i18n.t('local.change'))) {
-			i18n.changeLanguage(lang);
-			window.location.reload();
-		}
 	}
 
 	private getCurrentEditor() {
@@ -157,30 +147,12 @@ example,  42
 					</div>
 					<div className="calculator-container col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-6">
 						<Nav tabs>
-							<UncontrolledDropdown nav inNavbar className="showOnSM">
-								<DropdownToggle nav>
-									<FontAwesomeIcon icon={faBars as IconProp} />
-								</DropdownToggle>
-								<DropdownMenu>
-									<DropdownItem tag={Link} to="/relax/calc"><FontAwesomeIcon icon={faCalculator as IconProp} /> <T id="calc.navigation.calc" /></DropdownItem>
-									<DropdownItem tag={Link} to="/relax/help"><FontAwesomeIcon icon={faComment as IconProp } /> <T id="calc.navigation.help" /></DropdownItem>
-									<DropdownItem href="https://github.com/dbis-uibk/relax/issues"><FontAwesomeIcon icon={faQuestionCircle as IconProp} /> <T id="calc.navigation.feedback" /></DropdownItem>
-									<DropdownItem onClick={this.toggleDatasetModal}><FontAwesomeIcon icon={faDatabase as IconProp} /> <T id="calc.menu.datasets" /></DropdownItem>
-									<DropdownItem divider />
-									<DropdownItem onClick={() => this.changeLocale('en')}>en</DropdownItem>
-									<DropdownItem onClick={() => this.changeLocale('de')}>de</DropdownItem>
-									<DropdownItem onClick={() => this.changeLocale('es')}>es</DropdownItem>
-									<DropdownItem onClick={() => this.changeLocale('kr')}>kr</DropdownItem>
-									<DropdownItem onClick={() => this.changeLocale('it')}>it</DropdownItem>
-								</DropdownMenu>
-							</UncontrolledDropdown>
 							<NavItem>
 								<NavLink
 									className={classnames({ active: activeTab === 'relalg' })}
 									onClick={() => { this.setState({ activeTab: 'relalg' }); }}
 								>
-									<span className="hideOnSM"><T id="calc.editors.ra.tab-name" /></span>
-									<span className="showOnSM"><T id="calc.editors.ra.tab-name-short" /></span>
+									<T id="calc.editors.ra.tab-name" />
 								</NavLink>
 							</NavItem>
 							<NavItem>
@@ -188,8 +160,7 @@ example,  42
 									className={classnames({ active: activeTab === 'bagalg' })}
 									onClick={() => { this.setState({ activeTab: 'bagalg' }); }}
 								>
-									<span className="hideOnSM"><T id="calc.editors.bags.tab-name" /></span>
-									<span className="showOnSM"><T id="calc.editors.bags.tab-name-short" /></span>
+									<T id="calc.editors.bags.tab-name" />
 								</NavLink>
 							</NavItem>
 							<NavItem>
@@ -197,8 +168,7 @@ example,  42
 									className={classnames({ active: activeTab === 'trc' })}
 									onClick={() => { this.setState({ activeTab: 'trc' }); }}
 								>
-									<span className="hideOnSM">TRC</span>
-									<span className="showOnSM">TRC</span>
+									TRC
 								</NavLink>
 							</NavItem>
 							<NavItem>
@@ -206,8 +176,7 @@ example,  42
 									className={classnames({ active: activeTab === 'sql' })}
 									onClick={() => { this.setState({ activeTab: 'sql' }); }}
 								>
-									<span className="hideOnSM"><T id="calc.editors.sql.tab-name" /></span>
-									<span className="showOnSM"><T id="calc.editors.sql.tab-name-short" /></span>
+									<T id="calc.editors.sql.tab-name" />
 								</NavLink>
 							</NavItem>
 							<NavItem>
@@ -215,8 +184,7 @@ example,  42
 									className={classnames({ active: activeTab === 'group' })}
 									onClick={() => { this.setState({ activeTab: 'group' }); }}
 								>
-									<span className="hideOnSM"><T id="calc.editors.group.tab-name" /></span>
-									<span className="showOnSM"><T id="calc.editors.group.tab-name-short" /></span>
+									<T id="calc.editors.group.tab-name" />
 								</NavLink>
 							</NavItem>
 						</Nav>

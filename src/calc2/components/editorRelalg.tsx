@@ -387,7 +387,6 @@ export class EditorRelalg extends React.Component<Props, State> {
 								tooltip: 'calc.editors.ra.toolbar.insert-date-content',
 							},
 							{
-								className: 'showOnSM',
 								label: <FontAwesomeIcon className="editorButtonOnSM" icon={faPaste as IconProp} />,
 								onClick:  () => { this.props.relInsertModalToggle(); },
 								tooltipTitle: 'calc.editors.insert-relation-title',

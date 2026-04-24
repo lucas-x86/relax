@@ -188,7 +188,7 @@ export class EditorSql extends React.Component<Props> {
 								tooltip: 'calc.editors.sql.toolbar.limit',
 							},
 							{
-								label: <FontAwesomeIcon className="showOnSM" icon={faExternalLinkAlt  as IconProp} />,
+								label: <FontAwesomeIcon icon={faExternalLinkAlt  as IconProp} />,
 								onClick: item => this.props.relInsertModalToggle,
 								tooltipTitle: 'calc.editors.insert-relation-title',
 								tooltip: 'calc.editors.insert-relation-tooltip',
