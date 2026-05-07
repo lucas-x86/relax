@@ -6,16 +6,15 @@
 
 import { i18n, T } from 'calc2/i18n';
 import * as store from 'calc2/store';
-import { Group, HeaderTranslated } from 'calc2/store/groups';
+import { Group, GROUPS_LOAD_REQUEST, HeaderTranslated } from 'calc2/store/groups';
 import { translateHeader } from 'calc2/utils/misc';
 import classNames from 'classnames';
 import * as Immutable from 'immutable';
 import memoize from 'memoize-one';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link, NavLink, Redirect, useHistory, withRouter } from 'react-router-dom';
-import { GROUPS_LOAD_REQUEST } from 'calc2/store/groups';
-import { History } from 'history';
+import { NavLink } from 'react-router-dom';
+import { open as openDialog } from '@tauri-apps/plugin-dialog';
 
 type Props = {
 	groups: store.State['groups']['groups'],
@@ -23,17 +22,11 @@ type Props = {
 	locale: store.State['session']['locale'],
 	loadGroupTab: Function,
 	datasetLoaded: Function,
+	loadFile: (path: string) => void,
 };
 
 
 export class Menu extends React.Component<Props> {
-
-	gistLink: string;
-	
-	constructor(props: Props) {
-		super(props);
-		this.gistLink = '';
-	}
 
 	private getGroupsByHeadlineName = memoize((groups: Props['groups'], locale: string) => {
 		let groupsByHeadlineName = Immutable.OrderedMap<string | null, Group[]>();
@@ -63,17 +56,27 @@ export class Menu extends React.Component<Props> {
 		return groupsByHeadlineName;
 	});
 
+	private async openFromFile() {
+		try {
+			const selected = await openDialog({
+				multiple: false,
+				directory: false,
+				filters: [{ name: 'RelaX dataset', extensions: ['txt'] }],
+			});
+			if (typeof selected === 'string' && selected.length > 0) {
+				this.props.loadFile(selected);
+				this.props.datasetLoaded();
+			}
+		}
+		catch (e) {
+			console.error('failed to open file', e);
+		}
+	}
+
 	render(): JSX.Element {
 		const { current, locale } = this.props;
 		const groupsByHeadlineName = this.getGroupsByHeadlineName(this.props.groups, locale);
 
-		let recentlyUsedGroups = [];
-		const rug = localStorage.getItem('groups');
-		if(rug) {
-			recentlyUsedGroups = JSON.parse(rug);
-		}
-		
-		
 		return (
 			<div className="container">
 				<div className="row">
@@ -85,15 +88,15 @@ export class Menu extends React.Component<Props> {
 								<li key={`${headline}`}>
 									{!headline ? <T id="calc.maintainer-groups.misc" /> : headline}
 									<ul>
-										{groups.map((group: any, i: any) => {
+										{groups.map((group: any) => {
 											const { groupName, groupInfo } = group;
-											const path = `/relax/calc/${groupInfo.source}/${groupInfo.id}/${groupInfo.filename}/${groupInfo.index}`;
+											const path = `/calc/${groupInfo.source}/${groupInfo.id}/${groupInfo.filename}/${groupInfo.index}`;
 
 											return (
 												<li key={path} className={classNames({
 													active: current && current.group.groupInfo === group.groupInfo,
 												})}>
-													<NavLink to={path} onClick={()=>{this.props.datasetLoaded(); }}>{translateHeader(groupName, locale)}</NavLink>
+													<NavLink to={path} onClick={() => { this.props.datasetLoaded(); }}>{translateHeader(groupName, locale)}</NavLink>
 												</li>
 											);
 										})}
@@ -103,29 +106,19 @@ export class Menu extends React.Component<Props> {
 						</ul>
 					</div>
 					<div className="col-md-6 align-text-top align-top">
-						<h4><T id="calc.menu.load-gist-headline" /></h4>
-						<input type="text" className="form-control gist-load-input" placeholder="" data-i18n="[placeholder]calc.menu.load-gist-insert-placeholder" size={32} onChange={(event) => { this.gistLink = '/relax/calc/gist/' + event.target.value; }} />
-						<button onClick={() => {document.location.href = this.gistLink; this.props.datasetLoaded(); }} type="button" className="fullWidthBtn btn btn-secondary gist-load-btn"><T id="calc.menu.load-gist-button" /></button>
+						<h4>Abrir arquivo</h4>
+						<p>Carregar um dataset RelaX a partir de um arquivo <code>.txt</code> no disco.</p>
+						<button type="button" className="fullWidthBtn btn btn-secondary" onClick={() => this.openFromFile()}>
+							<i className="fa fa-folder-open-o fa-lg"></i> <span>Selecionar arquivo…</span>
+						</button>
 
-						<hr />
-						<h4><T id="calc.menu.recently-used" /></h4>
-						<ul>
-							{
-								recentlyUsedGroups.reverse().map((el: any) => 
-									<li key={el.name}>
-										<NavLink to={'/relax/calc/gist/'+el.group.groupInfo.id} onClick={()=>{this.props.datasetLoaded(); document.location.href = '/relax/calc/gist/'+el.group.groupInfo.id; }}>{el.name}</NavLink>
-									</li>,
-								)
-							}
-							
-						</ul>
 						<hr />
 						<h4><T id="calc.menu.create-own-dataset-headline" /></h4>
 						<p><T id="calc.menu.create-own-dataset-text" /></p>
-						<button type="button" className="fullWidthBtn btn btn-secondary open-group-new-btn" onClick={() => { this.props.loadGroupTab(false); } } >
+						<button type="button" className="fullWidthBtn btn btn-secondary open-group-new-btn" onClick={() => { this.props.loadGroupTab(false); }}>
 							<i className="fa fa-plus-square-o fa-lg"></i> <span><T id="calc.menu.create-own-dataset-button-new" /></span>
 						</button>
-						<button type="button" className="fullWidthBtn btn btn-secondary open-group-current-btn" onClick={() => { this.props.loadGroupTab(true); }} >
+						<button type="button" className="fullWidthBtn btn btn-secondary open-group-current-btn" onClick={() => { this.props.loadGroupTab(true); }}>
 							<i className="fa fa-pencil-square-o fa-lg"></i> <span><T id="calc.menu.create-own-dataset-button-modify" /></span>
 						</button>
 					</div>
@@ -140,5 +133,19 @@ export const MenuConnected = connect((state: store.State) => {
 		groups: state.groups.groups,
 		current: state.groups.current,
 		locale: state.session.locale,
+	};
+}, (dispatch) => {
+	return {
+		loadFile: (path: string) => {
+			const action: GROUPS_LOAD_REQUEST = {
+				type: 'GROUPS_LOAD_REQUEST',
+				source: 'file',
+				id: path,
+				maintainer: '',
+				maintainerGroup: '',
+				setCurrent: 'first',
+			};
+			dispatch(action);
+		},
 	};
 })(Menu);

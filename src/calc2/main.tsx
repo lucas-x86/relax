@@ -52,13 +52,10 @@ export class Main extends React.Component<Props, State> {
 					<I18NProvider>
 						<React.Suspense fallback={<div className="center"><div className="spinnerInit"></div></div>}>
 							<Switch>
-								<Redirect exact from="/" to={`/relax/calc`} />
-								<Redirect exact from="/relax" to={`/relax/calc`} />
-								<Redirect from="/relax/calc" to="/relax/calc/local/starter/local/0" exact strict />
-								<Route path="/relax/calc/:source/:id/:filename/:index" component={ConnectedCalc} />
-								<Route path="/relax/calc/:source/:id" component={ConnectedCalc} />
-								<Route path="/relax/api/:source/:id/:filename/:index" component={ConnectedCalc} />
-								<Route path="/relax/api/:source/:id" component={ConnectedCalc} />
+								<Redirect exact from="/" to={`/calc`} />
+								<Redirect from="/calc" to="/calc/local/starter/local/0" exact strict />
+								<Route path="/calc/:source/:id/:filename/:index" component={ConnectedCalc} />
+								<Route path="/calc/:source/:id" component={ConnectedCalc} />
 								<Route render={match => (
 									<div className="view-min"><h1>404</h1>
 										<p>This route doesn't exist</p>

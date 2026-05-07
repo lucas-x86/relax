@@ -61,7 +61,7 @@ export function* rootSaga() {
 		else {
 			// fetch
 			try {
-				if (source !== 'local' && source !== 'gist') {
+				if (source !== 'local' && source !== 'file') {
 					throw new Error(`unsupported source-type ${source}`);
 				}
 
@@ -126,7 +126,7 @@ export function* rootSaga() {
 	// yield loadStaticGroups();
 }
 
-export type GroupSourceType = 'http' | 'gist' | 'local';
+export type GroupSourceType = 'local' | 'file';
 export type GroupTable = {
 	tableId: number,
 	tableName: string,
@@ -222,11 +222,7 @@ function loadGroup(
 	maintainer: string,
 	maintainerGroup: string,
 ): GROUP_SET_CURRENT {
-	if (
-		source !== 'gist'
-		&& source !== 'http'
-		&& source !== 'local'
-	) {
+	if (source !== 'file' && source !== 'local') {
 		throw new Error(`invalid source ${source}`);
 	}
 	try {

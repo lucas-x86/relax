@@ -10,8 +10,6 @@ import { Group, GROUPS_LOAD_REQUEST, GROUP_SET_DRAFT } from 'calc2/store/groups'
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { Api } from './api';
-import queryString from 'query-string'
 
 type Props = RouteComponentProps<{
 	source: string,
@@ -36,8 +34,6 @@ type Props = RouteComponentProps<{
 export class Calc extends React.Component<Props> {
 	
 	private init: boolean;
-	private apiView: boolean = false;
-	private params: any = {};
 	private currentLoadGroupRequestId: string | null = null;
 	private loadGroupPending: boolean = false;
 	
@@ -47,9 +43,6 @@ export class Calc extends React.Component<Props> {
 	}
 
 	componentDidMount() {
-		this.apiView = this.props.location.pathname.split("/")[2] == "api"
-		this.params = queryString.parse(this.props.location.search)
-
 		this.init = true;
 		this.loadGroup(this.props);
 	}
@@ -106,23 +99,13 @@ export class Calc extends React.Component<Props> {
 		const { current } = this.props.groups;
 
 		if (current !== null) {
-			if (this.apiView == true) {
-				return (
-					<Api
-						group={current.group}
-						locale={locale}
-						params={this.params}
-					/>
-				);
-			} else {
-				return (
-					<Calculator
-						group={current.group}
-						locale={locale}
-						setDraft={this.props.setDraft}
-					/>
-				);
-			}
+			return (
+				<Calculator
+					group={current.group}
+					locale={locale}
+					setDraft={this.props.setDraft}
+				/>
+			);
 		}
 		else {
 			return <div>loading ...</div>;
@@ -131,25 +114,6 @@ export class Calc extends React.Component<Props> {
 }
 
 export const ConnectedCalc = connect((state: store.State) => {
-
-	// save current dataset to local storage to be shown as 'recently used groups'
-	const lsGists = localStorage.getItem('groups');
-	
-	
-	if(state.groups.current && Object.keys(state.groups.current.group.sourceInfo).length > 0) {
-		if(!lsGists) {
-			localStorage.setItem('groups', JSON.stringify([{name: state.groups.current.group.groupName.fallback, group: state.groups.current.group}]));
-		} 
-		else {
-			let parsedGroups = JSON.parse(lsGists) as any[];
-			// remove group from and add again to maintain order
-			parsedGroups = parsedGroups.filter(r => r.name !== state!.groups!.current!.group.groupName.fallback);
-			parsedGroups.push({name: state.groups.current.group.groupName.fallback, group: state.groups.current.group});
-			localStorage.setItem('groups', JSON.stringify(parsedGroups));
-		}
-	}
-	
-	
 	return {
 		groups: state.groups,
 		locale: state.session.locale,

@@ -6,8 +6,7 @@
 
 import { Group, GroupInfo, GroupSourceType, HeaderTranslated, SourceInfo } from 'calc2/store/groups';
 import { parseRelalgGroup, relalgFromRelalgAstNode, replaceVariables } from 'db/relax-core';
-import * as jQuery from 'jquery';
-import {string} from "prop-types";
+import { readTextFile } from '@tauri-apps/plugin-fs';
 
 import ld_sb from '../data/sb.txt?raw';
 import ld_ufes from '../data/ufes.txt?raw';
@@ -129,104 +128,54 @@ export function getGroupsFromGroupAst(groupAst: relalgAst.GroupRoot, groupInfo: 
 }
 
 /**
- * loads group definition(s) from a (remote) location
+ * loads group definition(s) from a local source (built-in dataset or file on disk).
  */
-export function loadGroupsFromSource(source: GroupSourceType, id: string, maintainer: string, maintainerGroup: string): Promise<Group[]> {
-  return new Promise<Group[]>((resolve, reject) => {
-
-    function gist_success(data: gist.Gist) {
-      const newGroups: Group[] = [];
-      for (const filename in data.files) {
-        if (!data.files.hasOwnProperty(filename)) {
-          continue;
-        }
-
-			//	console.log(data.files[filename].content)
-
-        const author = data.owner === null ? 'anonymous' : data.owner.login;
-        const authorUrl = data.owner === null ? undefined : data.owner.html_url;
+export async function loadGroupsFromSource(source: GroupSourceType, id: string, maintainer: string, maintainerGroup: string): Promise<Group[]> {
+  switch (source) {
+    case 'local': {
+      try {
+        const data: string = LOCAL_DATA[id];
         const info: GroupInfo = {
           source,
-          id: data.id,
+          id,
+          filename: 'local',
+          index: -1,
+          maintainer,
+          maintainerGroup,
+        };
+        return parseGroupsFromDefinition(data, info, {});
+      }
+      catch (e) {
+        const msg = 'cannot parse groups file: ' + (e as Error).message;
+        console.error(msg, e);
+        throw new Error(msg);
+      }
+    }
+    case 'file': {
+      try {
+        const data = await readTextFile(id);
+        const filename = id.split(/[\\/]/).pop() || id;
+        const info: GroupInfo = {
+          source,
+          id,
           filename,
           index: -1,
-          maintainer: maintainer,
-          maintainerGroup: maintainerGroup,
+          maintainer,
+          maintainerGroup,
         };
-
         const sourceInfo: SourceInfo = {
-          author,
-          authorUrl,
-          lastModified: new Date(data.updated_at),
-          url: data.url,
+          url: id,
+          lastModified: new Date(),
         };
-
-        try {
-          newGroups.push(...parseGroupsFromDefinition(data.files[filename].content, info, sourceInfo));
-          resolve(newGroups);
-        }
-        catch (e) {
-          // tslint:disable-next-line: prefer-template
-          const msg = 'could not parse given group from gist with id "' + id + '": ' + e;
-          console.error(msg, id, e, filename, data);
-          reject(new Error(msg));
-        }
+        return parseGroupsFromDefinition(data, info, sourceInfo);
+      }
+      catch (e) {
+        const msg = 'cannot read or parse file: ' + (e as Error).message;
+        console.error(msg, e);
+        throw new Error(msg);
       }
     }
-
-    switch (source) {
-      case 'gist': {
-        jQuery.ajax({
-          url: `https://api.github.com/gists/${id}`,
-          dataType: 'json',
-          success: gist_success,
-          crossDomain: true,
-          statusCode: {
-            403: function (data: any) {
-              reject(new Error(data.responseJSON.message));
-            },
-            404: function () {
-              // tslint:disable-next-line: prefer-template
-              reject(new Error('gist ' + id + ' not found'));
-            },
-          },
-          timeout: 10000,
-          async: false,
-        });
-        break;
-      }
-      case 'local': {
-        try {
-          const data: string = LOCAL_DATA[id];
-          const info: GroupInfo = {
-            source,
-            id,
-            filename: 'local',
-            index: -1,
-            maintainer: maintainer,
-            maintainerGroup: maintainerGroup,
-          };
-          const newGroups = parseGroupsFromDefinition(data, info, {});
-
-          resolve(newGroups);
-        }
-        catch (e) {
-          let msg = 'cannot parse groups file: ' + (e as Error).message;
-          msg += '<br>see log for more information';
-          console.error(msg, e);
-          reject(new Error(msg));
-        }
-        break;
-      }
-      case 'http': {
-        const msg = 'parsing groups from arbitrary urls is no longer supported; use github gists instead.';
-        window.alert(msg);
-        reject(new Error(msg));
-
-        break;
-      }
-      default:
-        reject(new Error('unknown source ' + source));
-    }
-  });
+    default:
+      throw new Error('unknown source ' + source);
+  }
 }
